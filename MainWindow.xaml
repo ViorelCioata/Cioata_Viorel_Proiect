@@ -1,0 +1,201 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Cioata_Viorel_Proiect"
+        xmlns:Properties="clr-namespace:GameShopDatabaseModel.Properties;assembly=GameShopDatabaseModel" x:Class="Cioata_Viorel_Proiect.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="600" Loaded="Window_Loaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="gameViewSource" d:DesignSource="{d:DesignInstance {x:Type Properties:Game}, CreateList=True}"/>
+        <CollectionViewSource x:Key="playerViewSource" d:DesignSource="{d:DesignInstance {x:Type Properties:Player}, CreateList=True}"/>
+        <CollectionViewSource x:Key="gameGamesPanelsViewSource" Source="{Binding GamesPanels, Source={StaticResource gameViewSource}}"/>
+
+        <ControlTemplate x:Key="validationTemplate">
+            <DockPanel>
+                <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
+                <AdornedElementPlaceholder/>
+            </DockPanel>
+        </ControlTemplate>
+
+        <Style x:Key="textBoxInError" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)/ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="nikita-kozlov-321.jpg"/>
+        </Grid.Background>
+        <TabControl x:Name="tabControl" Margin="10,60,10,10">
+            <TabItem Header="Games">
+                <Grid Background="#FFAC4040" DataContext="{StaticResource gameViewSource}">
+
+                    <DataGrid x:Name="gameDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="10,10,10,437" RowDetailsVisibilityMode="VisibleWhenSelected" Background="#FF20739B">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="ageRestrictionColumn" Binding="{Binding ageRestriction}" Header="age Restriction" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="descriptionColumn" Binding="{Binding description}" Header="description" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="gameIdColumn" Binding="{Binding gameId}" Header="game Id" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="nameColumn" Binding="{Binding name}" Header="name" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="typeColumn" Binding="{Binding type}" Header="type" Width="SizeToHeader"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Grid x:Name="grid1" HorizontalAlignment="Left" Margin="300,350,0,0" VerticalAlignment="Top">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="age Restriction:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+                        <TextBox x:Name="ageRestrictionTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding ageRestriction, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" 
+                                 Validation.ErrorTemplate="{StaticResource validationTemplate}" Style="{StaticResource textBoxInError}"/>
+
+
+                        <Label Content="description:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+                        <TextBox x:Name="descriptionTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding description, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="game Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+                        <TextBox x:Name="gameIdTextBox" IsEnabled="False" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding gameId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+                        <TextBox x:Name="nameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" 
+                                 Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" 
+                                 Validation.ErrorTemplate="{StaticResource validationTemplate}" Style="{StaticResource textBoxInError}"/>
+
+
+                        <Label Content="type:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+                        <TextBox x:Name="typeTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="4" Text="{Binding type, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                    </Grid>
+
+                    <Button Content="Cancel" Click="btnCancel_Click" HorizontalAlignment="Left" Margin="110,470,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button Content="Save" Click="btnSave_Click" HorizontalAlignment="Left" Margin="110,423,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button Content="New" Click="btnNew_Click" HorizontalAlignment="Left" Margin="110,372,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button Content="Delete" Click="btnDelete_Click" HorizontalAlignment="Left" Margin="10,470,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button Content="Edit" Click="btnEdit_Click" HorizontalAlignment="Left" Margin="203,470,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button Content="Previous" Click="btnPrevious_Click" HorizontalAlignment="Left" Margin="10,244,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button Content="Next" Click="btnNext_Click" HorizontalAlignment="Left" Margin="481,239,0,0" VerticalAlignment="Top" Width="75"/>
+
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Players">
+                <Grid Background="#FF6397A2" DataContext="{StaticResource playerViewSource}">
+                    <DataGrid x:Name="playerDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="10,10,10,437" RowDetailsVisibilityMode="VisibleWhenSelected" Background="#FFB6A926">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="ageColumn" Binding="{Binding age}" Header="age" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="gamerTagColumn" Binding="{Binding gamerTag}" Header="gamer Tag" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="genderColumn" Binding="{Binding gender}" Header="gender" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="nameColumn1" Binding="{Binding name}" Header="name" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="playerIdColumn" Binding="{Binding playerId}" Header="player Id" Width="SizeToHeader"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Grid x:Name="grid2" HorizontalAlignment="Left" Margin="335,351,0,0" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="age:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+                        <TextBox x:Name="ageTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="0" Text="{Binding age, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="gamer Tag:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+                        <TextBox x:Name="gamerTagTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="1" Text="{Binding gamerTag, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="gender:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+                        <TextBox x:Name="genderTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="2" Text="{Binding gender, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+                        <TextBox x:Name="nameTextBox1" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="3" Text="{Binding name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                        <Label Content="player Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+                        <TextBox x:Name="playerIdTextBox" IsEnabled="False" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="3" Grid.Row="4" Text="{Binding playerId, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+                    </Grid>
+
+                    <Button Content="Cancel" Click="btnCancel_Click" HorizontalAlignment="Left" Margin="110,470,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button Content="Save" Click="btnSave1_Click" HorizontalAlignment="Left" Margin="110,423,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button Content="New" Click="btnNew_Click" HorizontalAlignment="Left" Margin="110,372,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button Content="Delete" Click="btnDelete_Click" HorizontalAlignment="Left" Margin="10,470,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button Content="Edit" Click="btnEdit_Click" HorizontalAlignment="Left" Margin="204,470,0,0" VerticalAlignment="Top" Width="76"/>
+                    <Button Content="Previous" Click="btnPrevious1_Click" HorizontalAlignment="Left" Margin="10,244,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button Content="Next" Click="btnNext1_Click" HorizontalAlignment="Left" Margin="481,239,0,0" VerticalAlignment="Top" Width="75"/>
+
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Panel">
+                <Grid Background="#FF3D8043" DataContext="{StaticResource gameGamesPanelsViewSource}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="20*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid x:Name="gamesPanelsDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="120.5,105,33,406" RowDetailsVisibilityMode="VisibleWhenSelected" IsSynchronizedWithCurrentItem="True" Grid.Column="1">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="gameIdColumn1" Binding="{Binding gameId}" Header="game Id" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="panelIdColumn" Binding="{Binding panelId}" Header="panel Id" Width="SizeToHeader"/>
+                            <DataGridTextColumn x:Name="playerIdColumn1" Binding="{Binding playerId}" Header="player Id" Width="SizeToHeader"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+
+
+                    <ComboBox x:Name="cmbGames" HorizontalAlignment="Left" Margin="120.5,59,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1}">
+                                            <Binding Path="name"/>
+                                            <Binding Path="type"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+
+                    <ComboBox x:Name="cmbPlayers" HorizontalAlignment="Left" Margin="357.5,59,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+
+                    <Label Content="Games" HorizontalAlignment="Left" Margin="120.5,28,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+                    <Label Content="Players" HorizontalAlignment="Left" Margin="357.5,28,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+
+
+
+
+                    <Button Content="Cancel" Click="btnCancel_Click" HorizontalAlignment="Left" Margin="275.5,419,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1"/>
+                    <Button Content="Save" Click="btnSave2_Click" HorizontalAlignment="Left" Margin="275.5,372,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1"/>
+                    <Button Content="New" Click="btnNew_Click" HorizontalAlignment="Left" Margin="275.5,321,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1"/>
+                    <Button Content="Delete" Click="btnDelete_Click" HorizontalAlignment="Left" Margin="178.5,372,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1"/>
+                    <Button Content="Edit" Click="btnEdit_Click" HorizontalAlignment="Left" Margin="368.5,372,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1"/>
+                    <Button Content="Previous" Click="btnPrevious2_Click" HorizontalAlignment="Left" Margin="120.5,279,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1"/>
+                    <Button Content="Next" Click="btnNext2_Click" HorizontalAlignment="Left" Margin="431.5,279,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1"/>
+
+
+                </Grid>
+
+
+            </TabItem>
+
+        </TabControl>
+
+    </Grid>
+</Window>

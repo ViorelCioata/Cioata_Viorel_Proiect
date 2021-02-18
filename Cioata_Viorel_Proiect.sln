@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cioata_Viorel_Proiect", "Cioata_Viorel_Proiect.csproj", "{21ED59E0-2C0C-4374-8349-2D2C5B7C9FC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameShopDatabaseModel", "..\GameShopDatabaseModel\GameShopDatabaseModel.csproj", "{DEA7ED6B-E28F-4408-A9E1-7633BDC25E26}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{21ED59E0-2C0C-4374-8349-2D2C5B7C9FC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21ED59E0-2C0C-4374-8349-2D2C5B7C9FC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21ED59E0-2C0C-4374-8349-2D2C5B7C9FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21ED59E0-2C0C-4374-8349-2D2C5B7C9FC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEA7ED6B-E28F-4408-A9E1-7633BDC25E26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEA7ED6B-E28F-4408-A9E1-7633BDC25E26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEA7ED6B-E28F-4408-A9E1-7633BDC25E26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEA7ED6B-E28F-4408-A9E1-7633BDC25E26}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B5572A1B-5B75-476D-9142-494FAC7696F3}
+	EndGlobalSection
+EndGlobal
